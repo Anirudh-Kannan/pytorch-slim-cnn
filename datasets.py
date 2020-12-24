@@ -12,7 +12,7 @@ class CelebADataset(Dataset):
 
         validation = pd.read_csv(validation_index)
         labels = pd.read_csv(labels)
-        labels = pd.concat([validation, labels], axis=1)
+        labels = labels.merge(validation, how='inner', on='image_id')
         labels = labels.loc[:, ~labels.columns.duplicated()]
         self.image_folder = image_folder
         self.transform = transform
